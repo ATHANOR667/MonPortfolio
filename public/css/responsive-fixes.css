@@ -1,0 +1,108 @@
+/* Optimisations responsive pour les barres de navigation et l'affichage des éléments */
+@media (max-width: 768px) {
+    /* Amélioration du menu mobile */
+    .mobile-menu {
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
+    }
+    
+    /* Amélioration des transitions du menu mobile */
+    .mobile-menu-enter-active, .mobile-menu-leave-active {
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-menu-enter-from, .mobile-menu-leave-to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    
+    /* Amélioration de l'affichage des éléments sur la largeur */
+    .container-fluid {
+        width: 100%;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+    
+    /* Ajustement des marges pour les conteneurs */
+    .px-4 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    
+    /* Amélioration de l'espacement des éléments de navigation */
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Optimisations pour les très petits écrans */
+@media (max-width: 480px) {
+    /* Réduction des paddings pour maximiser l'espace disponible */
+    .px-4 {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    /* Ajustement de la taille des textes */
+    .text-xl {
+        font-size: 1.1rem !important;
+    }
+    
+    /* Amélioration de l'affichage des boutons */
+    .btn, button[type="submit"] {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Amélioration de la barre de navigation fixe sur mobile */
+@media (max-width: 768px) {
+    .fixed-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background-color: inherit;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Ajout d'un padding pour le contenu sous la navbar fixe */
+    .fixed-nav + main {
+        padding-top: 4rem;
+    }
+}
+
+/* Amélioration de l'accessibilité des éléments interactifs sur mobile */
+@media (max-width: 768px) {
+    .interactive-element {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Augmentation de la zone de clic */
+    .nav-link, .btn, button {
+        padding: 0.625rem 1rem;
+    }
+}
+
+/* Optimisation des grilles pour les différentes tailles d'écran */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .responsive-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Amélioration de la visibilité des éléments de navigation actifs sur mobile */
+@media (max-width: 768px) {
+    .active-nav-item {
+        background-color: rgba(59, 130, 246, 0.1);
+        border-left: 3px solid #3b82f6;
+    }
+}
