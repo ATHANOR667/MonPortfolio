@@ -50,7 +50,7 @@ class ContactController extends Controller
             $contact = Contact::create($validated);
 
             try {
-                Mail::to(config('mail.admin_address', 'admin@example.com'))
+                Mail::to(env('MAIL_SUPPORT'))
                     ->queue(new ContactFormSubmission($contact));
 
                 Mail::to($contact->email)

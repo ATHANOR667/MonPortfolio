@@ -27,16 +27,16 @@
                     <header class="flex flex-wrap items-center mb-4">
                         @foreach($project->categories as $category)
                             <span class="px-2 py-1 text-xs sm:text-sm rounded-full bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 mr-2 mb-2">
-                            {{ $category->name }}
-                        </span>
+                                {{ $category->name }}
+                            </span>
                         @endforeach
                         <span class="ml-auto text-sm text-gray-500 dark:text-gray-400 flex items-center">
-                        <svg class="h-4 w-4 sm:h-5 sm:w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        <span>{{ $project->views_count }} vues</span>
-                    </span>
+                            <svg class="h-4 w-4 sm:h-5 sm:w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span>{{ $project->views_count }} vues</span>
+                        </span>
                     </header>
 
                     <h1 class="text-2xl sm:text-3xl font-bold mb-4">{{ $project->title }}</h1>
@@ -53,14 +53,14 @@
                         @endif
                     </div>
 
-                    <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base overflow-x-auto">
-                        {!! $project->description !!}
-                    </p>
+                    <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-base overflow-x-auto">
+                        {!! nl2br(e($project->description)) !!}
+                    </div>
 
                     @if($project->content)
-                        <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-6 overflow-x-auto">
-                            {!! $project->content !!}
-                        </p>
+                        <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-6 overflow-x-auto">
+                            {!! nl2br(e($project->content)) !!}
+                        </div>
                     @endif
 
                     <dl class="mt-6 space-y-2 text-sm sm:text-base">
@@ -98,18 +98,23 @@
                 </div>
             </article>
 
-            <!-- Galerie d'images -->
+            <!-- Galerie d'images améliorée -->
             @if($project->images && $project->images->count() > 0)
                 <section class="mb-8">
                     <h2 class="text-xl sm:text-2xl font-bold mb-4">Galerie</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        @foreach($project->images as $image)
-                            <figure class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm">
-                                <img src="{{ Storage::url($image->path) }}"
-                                     alt="Image du projet {{ $project->title }}"
-                                     class="w-full h-40 sm:h-48 object-cover"
-                                     loading="lazy"
-                                     decoding="async">
+                        @foreach($project->images as $index => $image)
+                            <figure class="relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm transition-transform hover:scale-105">
+                                <a href="{{ Storage::url($image->path) }}"
+                                   class="block"
+                                   data-lightbox="gallery"
+                                   data-title="Image {{ $index + 1 }} du projet {{ $project->title }}">
+                                    <img src="{{ Storage::url($image->path) }}"
+                                         alt="Image {{ $index + 1 }} du projet {{ $project->title }}"
+                                         class="w-full h-40 sm:h-48 object-cover transition-opacity hover:opacity-90"
+                                         loading="lazy"
+                                         decoding="async">
+                                </a>
                             </figure>
                         @endforeach
                     </div>
@@ -316,4 +321,143 @@
             @endif
         </div>
     </div>
+
+    @push('scripts')
+        <style>
+            .custom-lightbox {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 9999;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .custom-lightbox.active {
+                display: flex;
+            }
+
+            .lightbox-content {
+                position: relative;
+                max-width: 90%;
+                max-height: 90vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .lightbox-img {
+                max-width: 100%;
+                max-height: 80vh;
+                object-fit: contain;
+                border-radius: 8px;
+            }
+
+            .close-btn {
+                position: absolute;
+                top: -40px;
+                right: -10px;
+                color: white;
+                background: rgba(0, 0, 0, 0.7);
+                font-size: 28px;
+                font-weight: bold;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 10000;
+                transition: all 0.2s;
+                border: none;
+            }
+
+            .close-btn:hover {
+                background: rgba(255, 255, 255, 0.9);
+                color: black;
+            }
+
+            .lightbox-title {
+                color: white;
+                margin-top: 10px;
+                text-align: center;
+                max-width: 80%;
+            }
+
+            body.lightbox-open {
+                overflow: hidden;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Création de la lightbox
+                const lightbox = document.createElement('div');
+                lightbox.className = 'custom-lightbox';
+                lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <button class="close-btn" aria-label="Fermer la lightbox">&times;</button>
+                    <img class="lightbox-img" src="" alt="">
+                    <div class="lightbox-title"></div>
+                </div>
+            `;
+                document.body.appendChild(lightbox);
+
+                const lightboxImg = lightbox.querySelector('.lightbox-img');
+                const lightboxTitle = lightbox.querySelector('.lightbox-title');
+                const closeBtn = lightbox.querySelector('.close-btn');
+
+                // Gestion des clics sur les images de la galerie
+                document.querySelectorAll('[data-lightbox="gallery"]').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        lightboxImg.src = this.href;
+                        lightboxTitle.textContent = this.dataset.title || '';
+
+                        // Ouvrir la lightbox
+                        lightbox.classList.add('active');
+                        document.body.classList.add('lightbox-open');
+
+                        // Focus sur le bouton de fermeture pour les utilisateurs clavier
+                        closeBtn.focus();
+                    });
+                });
+
+                // Fermer la lightbox
+                function closeLightbox() {
+                    lightbox.classList.remove('active');
+                    document.body.classList.remove('lightbox-open');
+                    lightboxImg.src = '';
+                    lightboxTitle.textContent = '';
+                }
+
+                // Bouton de fermeture
+                closeBtn.addEventListener('click', closeLightbox);
+
+                // Fermer en cliquant à l'extérieur de l'image
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+
+                // Fermer avec la touche Escape
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                        closeLightbox();
+                    }
+                });
+
+                // Empêcher la fermeture quand on clique sur l'image
+                lightboxImg.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        </script>
+    @endpush
 @endsection

@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes
-Route::get('/projects/{category?}', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
-Route::get('/project-show/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('projects.show');
+Route::middleware(\App\Http\Middleware\TrackVisitor::class)->get('/projects/{category?}', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
+Route::middleware(\App\Http\Middleware\TrackVisitor::class)->get('/project-show/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('projects.show');
 
 // Public profile route
-Route::get('/', [ProfileViewController::class, 'show'])->name('home');
-Route::get('/profile', [ProfileViewController::class, 'show'])->name('profile.show');
+Route::middleware(\App\Http\Middleware\TrackVisitor::class)->get('/', [ProfileViewController::class, 'show'])->name('home');
+Route::middleware(\App\Http\Middleware\TrackVisitor::class)->get('/profile', [ProfileViewController::class, 'show'])->name('profile.show');
 
 // Public contact route
-Route::get('/contact', [App\Http\Controllers\ContactController::class, 'show'])->name('contact.show');
+Route::middleware(\App\Http\Middleware\TrackVisitor::class)->get('/contact', [App\Http\Controllers\ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
 // Comment routes

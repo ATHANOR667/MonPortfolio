@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" class="h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title>@yield('title', config('app.name', 'Portfolio'))</title>
+    <title><?php echo $__env->yieldContent('title', config('app.name', 'Portfolio')); ?></title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,10 +18,10 @@
     <script defer src="https://cdn.alpinejs.dev/dist/cdn.min.js"></script>
 
     <!-- Custom JavaScript -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="<?php echo e(asset('js/app.js')); ?>"></script>
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ asset('css/responsive-fixes.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/responsive-fixes.css')); ?>">
     <style>
         [x-cloak] { display: none !important; }
 
@@ -122,24 +122,25 @@
 </script>
 <div class="min-h-screen flex flex-col">
     <!-- Navigation principale - uniquement pour les pages publiques, pas pour l'admin -->
-    @if(!request()->is('admin*'))
+    <?php if(!request()->is('admin*')): ?>
         <header class="bg-white dark:bg-gray-800 shadow-sm fixed-nav">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('profile.show') }}" class="text-xl font-bold text-primary-600 dark:text-primary-400">
-                                {{ config('app.name', 'Portfolio') }}
+                            <a href="<?php echo e(route('profile.show')); ?>" class="text-xl font-bold text-primary-600 dark:text-primary-400">
+                                <?php echo e(config('app.name', 'Portfolio')); ?>
+
                             </a>
                         </div>
                         <nav class="hidden sm:ml-6 sm:flex sm:space-x-8" aria-label="Navigation principale">
-                            <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
+                            <a href="<?php echo e(route('projects.index')); ?>" class="<?php echo e(request()->routeIs('projects.*') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'); ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
                                 Projets
                             </a>
-                            <a href="{{ route('profile.show') }}" class="{{ request()->routeIs('profile.show') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
+                            <a href="<?php echo e(route('profile.show')); ?>" class="<?php echo e(request()->routeIs('profile.show') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'); ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
                                 Mon Parcours
                             </a>
-                            <a href="{{ route('contact.show') }}" class="{{ request()->routeIs('contact.*') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
+                            <a href="<?php echo e(route('contact.show')); ?>" class="<?php echo e(request()->routeIs('contact.*') ? 'border-primary-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700'); ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-300">
                                 Contact
                             </a>
                         </nav>
@@ -173,13 +174,13 @@
             <!-- Menu mobile -->
             <div class="hidden mobile-menu sm:hidden" id="mobile-menu">
                 <div class="pt-2 pb-3 space-y-1">
-                    <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200' }} block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
+                    <a href="<?php echo e(route('projects.index')); ?>" class="<?php echo e(request()->routeIs('projects.*') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200'); ?> block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
                         Projets
                     </a>
-                    <a href="{{ route('profile.show') }}" class="{{ request()->routeIs('profile.show') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200' }} block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
+                    <a href="<?php echo e(route('profile.show')); ?>" class="<?php echo e(request()->routeIs('profile.show') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200'); ?> block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
                         Mon Parcours
                     </a>
-                    <a href="{{ route('contact.show') }}" class="{{ request()->routeIs('contact.*') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200' }} block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
+                    <a href="<?php echo e(route('contact.show')); ?>" class="<?php echo e(request()->routeIs('contact.*') ? 'bg-primary-50 dark:bg-primary-900 border-primary-500 text-primary-700 dark:text-primary-300 active-nav-item' : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-800 dark:hover:text-gray-200'); ?> block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-300 interactive-element">
                         Contact
                     </a>
                 </div>
@@ -198,14 +199,14 @@
                 </div>
             </div>
         </header>
-    @endif
+    <?php endif; ?>
 
     <!-- Contenu principal -->
     <main class="flex-1 pt-16">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
-    @if(!request()->is('admin*'))
+    <?php if(!request()->is('admin*')): ?>
         <footer class="bg-white dark:bg-gray-800 shadow-inner">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -236,7 +237,7 @@
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Navigation</h3>
                         <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('profile.show') }}" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
+                                <a href="<?php echo e(route('profile.show')); ?>" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
@@ -244,7 +245,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('projects.index') }}" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
+                                <a href="<?php echo e(route('projects.index')); ?>" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                     </svg>
@@ -252,7 +253,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('contact.show') }}" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
+                                <a href="<?php echo e(route('contact.show')); ?>" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
@@ -324,7 +325,7 @@
                 <div class="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
                     <div class="flex flex-col md:flex-row justify-between items-center">
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            © {{ date('Y') }} {{ config('app.name', 'Portfolio') }}. Tous droits réservés.
+                            © <?php echo e(date('Y')); ?> <?php echo e(config('app.name', 'Portfolio')); ?>. Tous droits réservés.
                         </p>
                         <div class="mt-4 md:mt-0 flex items-center space-x-4">
                             <button id="theme-toggle-footer" type="button" class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900 hover:bg-primary-200 dark:hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-300">
@@ -341,7 +342,7 @@
                 </div>
             </div>
         </footer>
-    @endif
+    <?php endif; ?>
 </div>
 
 <!-- Script pour le menu mobile et le thème -->
@@ -415,6 +416,5 @@
         });
     });
 </script>
-@stack('scripts')
 </body>
-</html>
+</html><?php /**PATH C:\Users\MARCAU\PhpstormProjects\MonPortfolio\resources\views/layouts/app.blade.php ENDPATH**/ ?>
