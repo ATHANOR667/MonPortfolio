@@ -41,14 +41,24 @@ class StatisticsController extends Controller
         $topProjects = Project::orderBy('views_count', 'desc')
             ->take(5)
             ->get();
-        
-        $visitorsByCountry = Visitor::select('country', DB::raw('count(*) as count'))
+
+        $subquery = Visitor::select(
+            DB::raw('DATE(created_at) as visit_date'),
+            'ip_address',
+            'country'
+        )
             ->whereNotNull('country')
+            ->groupBy(DB::raw('DATE(created_at)'), 'ip_address', 'country');
+
+        $visitorsByCountry = DB::table(DB::raw("({$subquery->toSql()}) as sub"))
+            ->mergeBindings($subquery->getQuery()) // nécessaire pour passer les bindings
+            ->select('country', DB::raw('count(*) as count'))
             ->groupBy('country')
             ->orderBy('count', 'desc')
             ->take(10)
             ->get();
-        
+
+
         $recentVisitors = Visitor::latest()
             ->take(10)
             ->get();
