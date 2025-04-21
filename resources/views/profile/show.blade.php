@@ -265,17 +265,17 @@
                     <div class="space-y-4">
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Français (Parfait)</span>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">100%</span>
+                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Français </span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">90%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 90%"></div>
                             </div>
                         </div>
 
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Anglais (Conversationnel)</span>
+                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Anglais </span>
                                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">60%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
@@ -285,7 +285,7 @@
 
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Allemand (Conversationnel)</span>
+                                <span class="text-base font-medium text-gray-700 dark:text-gray-300">Allemand </span>
                                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">60%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">

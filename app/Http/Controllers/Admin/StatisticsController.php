@@ -16,17 +16,25 @@ class StatisticsController extends Controller
 
     public function index(): \Illuminate\Contracts\View\View
     {
-        $totalVisits = Visitor::count();
+        $totalVisits = Visitor::select(DB::raw('DATE(created_at) as date'), 'ip_address')
+            ->groupBy(DB::raw('DATE(created_at)'), 'ip_address')
+            ->get()
+            ->count();
+        ;
         $totalProjects = Project::count();
         $totalComments = Comment::count();
         $totalMessages = Contact::count();
-        
-        $visitsByDate = Visitor::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+
+        $visitsByDate = Visitor::select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('COUNT(DISTINCT ip_address) as count')
+        )
             ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->groupBy('date')
             ->orderBy('date')
             ->get();
-        
+
+
         $dates = $visitsByDate->pluck('date')->toArray();
         $counts = $visitsByDate->pluck('count')->toArray();
         
